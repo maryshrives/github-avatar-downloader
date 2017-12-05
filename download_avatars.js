@@ -23,12 +23,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
-// function getAvatarUrl(contributors) {
-//   contributors.forEach(function(contributors) {
-//     console.log(contributors.avatar_url);
-//   })
-// }
-
 function downloadImageByURL(url, filePath) {
   request.get(url + '/' + filePath)
     .on('error', function (err) {
@@ -45,9 +39,14 @@ function downloadImageByURL(url, filePath) {
     })
 }
 
+if(args.length !== 2) {
+  console.log('Please enter a Repo owner & name');
+} else {
 getRepoContributors(args[0], args[1], function(err, result) {
   console.log("Error: ", err);
+  console.log("Result: ", result);
   result.forEach( function(contributor) {
     downloadImageByURL(contributor['avatar_url'] + "avatars/", contributor['login'] + ".jpg");
   });
 })
+}
